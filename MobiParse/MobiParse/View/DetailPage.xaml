@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MobiParse.View.DetailPage">
+    <ContentPage.Content>
+        <AbsoluteLayout>
+            <ContentView Padding="25" AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0, 0, 1, 1">
+                <Grid AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0, 0, 1, 1" >
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="5*" />
+                        <RowDefinition Height="5*" />
+                        <RowDefinition Height="85*" />
+                        <RowDefinition Height="5*" />
+                    </Grid.RowDefinitions>
+                    <Label Grid.Row="1" Text="Lista użytkowników:" VerticalOptions="StartAndExpand" HorizontalOptions="CenterAndExpand"  />
+                    <ListView Grid.Row="2" x:Name="ListUser" HasUnevenRows="True" SeparatorVisibility="None" BackgroundColor="Transparent" ItemsSource="{Binding Names}" />
+                </Grid>
+            </ContentView>
+        </AbsoluteLayout>
+    </ContentPage.Content>
+</ContentPage>

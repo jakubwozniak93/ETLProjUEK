@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:MobiParse"
+             x:Class="MobiParse.MainPage">
+    <ContentPage.Content>
+        <AbsoluteLayout>
+            <ContentView Padding="25" AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0, 0, 1, 1">
+                <Grid AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0, 0, 1, 1" >
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="10*" />
+                        <RowDefinition Height="5*" />
+                        <RowDefinition Height="10*" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="25*" />
+                    </Grid.RowDefinitions>
+                    <Image Grid.Row="1" Source="ceneo_logo.png" Aspect="AspectFit" />
+                    <Label Grid.Row="3" Text="Wprowadz kod produktu"
+                        VerticalOptions="CenterAndExpand" 
+                        HorizontalOptions="CenterAndExpand" />
+                    <Entry x:Name="EntryProductKey" Grid.Row="4" HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand" Margin="25, 10, 25, 10" Keyboard="Numeric" MinimumHeightRequest="20" />
+                    <Button Grid.Row="5" HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand" BackgroundColor="AliceBlue" Text="Rozpocznij proces ETL" Margin="25, 10, 25, 10" BorderWidth="1" BorderColor="Blue" Clicked="Button_Clicked"/>
+                </Grid>
+            </ContentView>
+        </AbsoluteLayout>
+    </ContentPage.Content>
+</ContentPage>
