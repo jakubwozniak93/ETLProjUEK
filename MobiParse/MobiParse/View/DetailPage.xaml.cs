@@ -102,10 +102,17 @@ namespace MobiParse.View
                 //string productAdvantages = productAdvantagesNode.InnerText.ToString();
                 //productAdvantages = productAdvantages.Replace("\r\n", string.Empty);
                 //reviewData.Add(productAdvantages);
-                HtmlNode[] allInfoPros = review.DocumentNode.Descendants("div").Where(x => x.Attributes.Contains("class") && x.Attributes["class"].Value == "pros-cell").ToArray();
-                HtmlNode[] allInfoCons = review.DocumentNode.Descendants("div").Where(x => x.Attributes.Contains("class") && x.Attributes["class"].Value == "cons-cell").ToArray();
+                HtmlNode allInfoPros = review.DocumentNode.Descendants("div").Where(x => x.Attributes.Contains("class") && x.Attributes["class"].Value == "pros-cell").FirstOrDefault();
                 HtmlAgilityPack.HtmlDocument reviewPros = new HtmlAgilityPack.HtmlDocument();
-                //reviewPros.LoadHtml(allInfoPros.InnerHtml);
+                reviewPros.LoadHtml(allInfoPros.InnerHtml);
+                HtmlNode[] InfoPros = reviewPros.DocumentNode.Descendants("li").ToArray();
+
+
+                HtmlNode allInfoCons = review.DocumentNode.Descendants("div").Where(x => x.Attributes.Contains("class") && x.Attributes["class"].Value == "cons-cell").FirstOrDefault();
+                HtmlAgilityPack.HtmlDocument reviewCons = new HtmlAgilityPack.HtmlDocument();
+                reviewCons.LoadHtml(allInfoCons.InnerHtml);
+                HtmlNode[] InfoCons = reviewCons.DocumentNode.Descendants("li").ToArray();
+                
 
                 reviewData.Add(singleReviewData);
             }
