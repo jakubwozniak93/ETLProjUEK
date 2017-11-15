@@ -80,7 +80,7 @@ namespace MobiParse.View
                 //get review datetime
                 HtmlNode dateTimeNode = review.DocumentNode.Descendants("time").Where(x => x.Attributes.Contains("datetime")).FirstOrDefault();
                 string dateTime = dateTimeNode.InnerText.ToString();
-                dateTime = dateTime.Replace("\r\n", string.Empty).Replace(" ", string.Empty);
+                dateTime = dateTime.Replace("\r\n", string.Empty);
                 singleReviewData.Add(dateTime);
                 //get review text
                 HtmlNode reviewTextNode = review.DocumentNode.Descendants("p").Where(x => x.Attributes.Contains("class") && x.Attributes["class"].Value == "product-review-body").FirstOrDefault();
@@ -98,10 +98,15 @@ namespace MobiParse.View
                 reviewUnuseful = reviewUnuseful.Replace("\r\n", string.Empty);
                 singleReviewData.Add(reviewUnuseful);
                 //get product advantages
-                HtmlNode[] productAdvantagesNode = review.DocumentNode.Descendants("div").Where(x => x.Attributes.Contains("class") && x.Attributes["class"].Value == "pros-cell").ToArray();
+                HtmlNode[] productAdvantagesNode = review.DocumentNode.Descendants("li").ToArray();
                 //string productAdvantages = productAdvantagesNode.InnerText.ToString();
                 //productAdvantages = productAdvantages.Replace("\r\n", string.Empty);
                 //reviewData.Add(productAdvantages);
+                HtmlNode[] allInfoPros = review.DocumentNode.Descendants("div").Where(x => x.Attributes.Contains("class") && x.Attributes["class"].Value == "pros-cell").ToArray();
+                HtmlNode[] allInfoCons = review.DocumentNode.Descendants("div").Where(x => x.Attributes.Contains("class") && x.Attributes["class"].Value == "cons-cell").ToArray();
+                HtmlAgilityPack.HtmlDocument reviewPros = new HtmlAgilityPack.HtmlDocument();
+                //reviewPros.LoadHtml(allInfoPros.InnerHtml);
+
                 reviewData.Add(singleReviewData);
             }
         }
