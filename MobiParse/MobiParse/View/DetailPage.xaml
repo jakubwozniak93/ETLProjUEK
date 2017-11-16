@@ -1,19 +1,60 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="MobiParse.View.DetailPage">
+             x:Class="MobiParse.View.DetailPage"
+             Title="Opinie">
     <ContentPage.Content>
         <AbsoluteLayout>
             <ContentView Padding="25" AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0, 0, 1, 1">
                 <Grid AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0, 0, 1, 1" >
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="5*" />
-                        <RowDefinition Height="5*" />
-                        <RowDefinition Height="85*" />
-                        <RowDefinition Height="5*" />
+                        <RowDefinition Height="2*" />
+                        <RowDefinition Height="auto" />
+                        <RowDefinition Height="auto" />
+                        <RowDefinition Height="80*" />
+                        <RowDefinition Height="2*" />
                     </Grid.RowDefinitions>
-                    <Label Grid.Row="1" Text="Lista użytkowników:" VerticalOptions="StartAndExpand" HorizontalOptions="CenterAndExpand"  />
-                    <ListView Grid.Row="2" x:Name="ListUser" HasUnevenRows="True" SeparatorVisibility="None" BackgroundColor="Transparent" ItemsSource="{Binding Names}" />
+                    <Label Grid.Row="1" Text="{Binding ProductInfoLbl}" VerticalOptions="StartAndExpand" HorizontalOptions="CenterAndExpand" FontAttributes="Bold" TextColor="Black" FontSize="22" />
+                    <Label Grid.Row="2" Text="{Binding ProductCodeLbl}" VerticalOptions="StartAndExpand" HorizontalOptions="CenterAndExpand" TextColor="Black" FontSize="15"/>
+
+                    <ListView Grid.Row="3" HasUnevenRows="True" SeparatorVisibility="None" BackgroundColor="Transparent" ItemsSource="{Binding ReviewList}" >
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <ViewCell>
+                                    <Grid VerticalOptions="Fill" BackgroundColor="White" Padding="10" Margin="0,0,0,8">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="50*"/>
+                                            <ColumnDefinition Width="50*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="Auto" />
+                                        </Grid.RowDefinitions>
+                                        <Label Grid.Column="0" Grid.Row="0" Text="Nick: " FontAttributes="Bold"/>
+                                        <Label Grid.Column="1" Grid.Row="0" Text="{Binding UserName}" />
+                                        <Label Grid.Column="0" Grid.Row="1" Text="Status: " FontAttributes="Bold"/>
+                                        <Label Grid.Column="1" Grid.Row="1" Text="{Binding ReviewStatus}"  />
+                                        <Label Grid.Column="0" Grid.Row="2" Text="Ocena: " FontAttributes="Bold"/>
+                                        <Label Grid.Column="1" Grid.Row="2" Text="{Binding ScoreValue}"  />
+                                        <Label Grid.Column="0" Grid.Row="3" Text="Data: " FontAttributes="Bold"/>
+                                        <Label Grid.Column="1" Grid.Row="3" Text="{Binding DateTime}" />
+                                        <Label Grid.Column="0" Grid.Row="4" Text="przydatna: " FontAttributes="Bold"/>
+                                        <Label Grid.Column="1" Grid.Row="4" Text="{Binding ReviewUseful}"  />
+                                        <Label Grid.Column="0" Grid.Row="5" Text="nieprzydatna: " FontAttributes="Bold"/>
+                                        <Label Grid.Column="1" Grid.Row="5" Text="{Binding ReviewUnuseful}"  />
+                                        <Label Grid.Column="0" Grid.Row="6" Text="Treść opinii: " FontAttributes="Bold"/>
+                                        <Label Grid.Column="0" Grid.Row="7" Grid.ColumnSpan="2" Text="{Binding ReviewText}"  />
+                                    </Grid>
+                                </ViewCell>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
                 </Grid>
             </ContentView>
         </AbsoluteLayout>

@@ -10,18 +10,54 @@ namespace MobiParse.ViewModel
 {
     public class DetailViewModel : BaseViewModel
     {
-        private List<string> _names;
-        
-        public List<string> Names
+        private string _productInfoLbl;
+        private string _productCodeLbl;
+        private string _constProductIdlbl;
+        private List<ReviewDetailsViewModel> _reviewList;
+
+        public DetailViewModel()
+        {
+            _constProductIdlbl = "Kod produktu: ";
+            ReviewList = new List<ReviewDetailsViewModel>();
+        }
+
+
+        public List<ReviewDetailsViewModel> ReviewList
         {
             get
             {
-                return _names;
+                return _reviewList;
             }
             set
             {
-                _names = value;
-                RaisePropertyChanged(nameof(Names));
+                _reviewList = value;
+                RaisePropertyChanged(nameof(ReviewList));
+            }
+        }
+
+        public string ProductInfoLbl
+        {
+            get
+            {
+                return _productInfoLbl;
+            }
+            set
+            {
+                _productInfoLbl = value;
+                RaisePropertyChanged(nameof(ProductInfoLbl));
+            }
+        }
+
+        public string ProductCodeLbl
+        {
+            get
+            {
+                return _constProductIdlbl + _productCodeLbl;
+            }
+            set
+            {
+                _productCodeLbl = value;
+                RaisePropertyChanged(nameof(ProductCodeLbl));
             }
         }
 
