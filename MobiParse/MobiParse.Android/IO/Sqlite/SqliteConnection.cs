@@ -34,9 +34,9 @@ namespace MobiParse.Droid.IO.Sqlite
                     {
                         if (conn == null)
                         {
-                            string path = GetDBPath();
-                            var platform = new SQLitePlatformAndroid();
-                            conn = new SQLiteConnectionWithLock(platform, new SQLiteConnectionString(path, true));
+                            //string path = GetDBPath();
+                            //var platform = new SQLitePlatformAndroid();
+                            //conn = new SQLiteConnectionWithLock(platform, new SQLiteConnectionString(path, true));
                         }
                     }
                 }

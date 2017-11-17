@@ -29,9 +29,9 @@ namespace MobiParse.iOS.IO.Sqlite
                     {
                         if (conn == null)
                         {
-                            string path = GetDBPath();
-                            var platform = new SQLitePlatformIOS();
-                            conn = new SQLiteConnectionWithLock(platform, new SQLiteConnectionString(path, true));
+                            //string path = GetDBPath();
+                            //var platform = new SQLitePlatformIOS();
+                            //conn = new SQLiteConnectionWithLock(platform, new SQLiteConnectionString(path, true));
                         }
                     }
                 }
