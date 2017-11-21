@@ -17,8 +17,7 @@ namespace MobiParse
     public partial class MainPage : ContentPage
     {
         string producktId;
-        
-        string url;
+
 
         public MainPage()
         {
@@ -35,7 +34,7 @@ namespace MobiParse
             }
             else
             {
-                producktId = "47044601";
+                producktId = "50734754";
             }
 
 

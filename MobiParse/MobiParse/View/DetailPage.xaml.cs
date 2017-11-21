@@ -19,11 +19,8 @@ namespace MobiParse.View
         public ViewModel.DetailViewModel viewModel;
         public const string ceneoUrl = "https://www.ceneo.pl/";
         public const string ceneoUrlReviewFirstPage = "#tab=reviews";
-        public const string ceneoUrlReviews = "/opinie-21";
+        public const string ceneoUrlReviews = "/opinie-";
         public string htmlCode;
-        string userName;
-        string reviewStatus;
-        string urlProduct;
         string urlReview;
         string urlReviews;
         string productInfo;
@@ -45,31 +42,25 @@ namespace MobiParse.View
         public async Task GetHTMLCodeAsync(string producktId)
         {
             viewModel.ProductCodeLbl = producktId;
-            urlReview = ceneoUrl + producktId + ceneoUrlReviewFirstPage;
             urlReviews = ceneoUrl + producktId + ceneoUrlReviews;
             //var response = await new HttpClient().GetAsync(urlReview, urlReviews);
             //await GetProductInfo(producktId);
             //await GetProductInfo(urlReview);
-            await GetReviewInfo(urlReview, urlReviews);
+            await GetReviewInfo(urlReviews);
         }
         
-        public async Task GetReviewInfo(string url, string url2)
+        public async Task GetReviewInfo(string url)
         {
             
             singleReviewData = new List<ReviewDetailsViewModel>();
-            string reviewInfo = await new HttpClient().GetStringAsync(new Uri(url));
-            string reviewsInfo = await new HttpClient().GetStringAsync(new Uri(url2));
 
-
-            
+            string reviewInfo = await new HttpClient().GetStringAsync(new Uri(url+"1"));
 
             HtmlAgilityPack.HtmlDocument doc = new HtmlAgilityPack.HtmlDocument();
             doc.LoadHtml(reviewInfo);
-            HtmlAgilityPack.HtmlDocument doc2 = new HtmlAgilityPack.HtmlDocument();
-            doc2.LoadHtml(reviewsInfo);
 
-            var nodes = doc.DocumentNode.ToString();
-            string result = "";
+
+            //var nodes = doc.DocumentNode.ToString();
             //foreach (var node in nodes)
             //{
 
@@ -82,12 +73,28 @@ namespace MobiParse.View
             productInfo = productInfo.Replace(" - Opinie", string.Empty);
             viewModel.ProductInfoLbl = productInfo;
             HtmlNode[] reviewInfoNodes = doc.DocumentNode.Descendants("li").Where(x => x.Attributes.Contains("class") && x.Attributes["class"].Value == "review-box js_product-review").ToArray();
-            HtmlNode[] reviewsInfoNodes = doc2.DocumentNode.Descendants("li").Where(x => x.Attributes.Contains("class") && x.Attributes["class"].Value == "review-box js_product-review").ToArray();
-            
-            HtmlNode[] allInfo = new HtmlNode[reviewInfoNodes.Length + reviewsInfoNodes.Length];
-            Array.Copy(reviewInfoNodes, allInfo, reviewInfoNodes.Length);
-            Array.Copy(reviewsInfoNodes, 0, allInfo, reviewInfoNodes.Length, reviewsInfoNodes.Length);
-            foreach (HtmlNode allItem in allInfo)
+            HtmlNode reviewsCountNode = doc.DocumentNode.Descendants("span").Where(x => x.Attributes.Contains("itemprop") && x.Attributes["itemprop"].Value == "reviewCount").FirstOrDefault();
+            int reviewCount = (int.Parse(reviewsCountNode.InnerText.ToString())) / 10;
+            List<HtmlNode[]> allInfoNodesArray = new List<HtmlNode[]>();
+            for (int i = 1; i < reviewCount; i++)
+            {
+                reviewInfo = await new HttpClient().GetStringAsync(new Uri(url + i));
+                doc.LoadHtml(reviewInfo);
+                HtmlNode[] reviewsInfoNodes = doc.DocumentNode.Descendants("li").Where(x => x.Attributes.Contains("class") && x.Attributes["class"].Value == "review-box js_product-review").ToArray();
+                await ParseData(reviewsInfoNodes);
+            }
+
+
+            //HtmlNode[] allInfo = new HtmlNode[reviewInfoNodes.Length + reviewsInfoNodes.Length];
+            //Array.Copy(reviewInfoNodes, allInfo, reviewInfoNodes.Length);
+            //Array.Copy(reviewsInfoNodes, 0, allInfo, reviewInfoNodes.Length, reviewsInfoNodes.Length);
+
+        }
+
+
+        public async Task ParseData(HtmlNode[] nodesTable)
+        {
+            foreach (HtmlNode allItem in nodesTable)
             {
                 
                 HtmlAgilityPack.HtmlDocument review = new HtmlAgilityPack.HtmlDocument();
