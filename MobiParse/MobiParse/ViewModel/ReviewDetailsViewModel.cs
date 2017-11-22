@@ -17,6 +17,7 @@ namespace MobiParse.ViewModel
         public string ReviewUnuseful { get; set; }
         public List<string> ProductPros { get; set; }
         public List<string> ProductCons { get; set; }
+        public int ReviewsCount { get; set; }
 
     }
 }

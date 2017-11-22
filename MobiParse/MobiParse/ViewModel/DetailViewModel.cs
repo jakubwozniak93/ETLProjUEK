@@ -13,11 +13,14 @@ namespace MobiParse.ViewModel
         private string _productInfoLbl;
         private string _productCodeLbl;
         private string _constProductIdlbl;
+        private string _messageLbl;
+        private bool _isOverlayVisible;
         private List<ReviewDetailsViewModel> _reviewList;
 
         public DetailViewModel()
         {
             _constProductIdlbl = "Kod produktu: ";
+            _messageLbl = "Trwa proces ETL...";
             ReviewList = new List<ReviewDetailsViewModel>();
         }
 
@@ -58,6 +61,32 @@ namespace MobiParse.ViewModel
             {
                 _productCodeLbl = value;
                 RaisePropertyChanged(nameof(ProductCodeLbl));
+            }
+        }
+
+        public bool IsOverlayVisible
+        {
+            get
+            {
+                return _isOverlayVisible;
+            }
+            set
+            {
+                _isOverlayVisible = value;
+                RaisePropertyChanged(nameof(IsOverlayVisible));
+            }
+        }
+
+        public string MessageLbl
+        {
+            get
+            {
+                return _messageLbl;
+            }
+            set
+            {
+                _messageLbl = value;
+                RaisePropertyChanged(nameof(MessageLbl));
             }
         }
 
