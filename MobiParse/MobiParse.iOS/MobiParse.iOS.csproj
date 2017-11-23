@@ -154,6 +154,9 @@
   <ItemGroup>
     <BundleResource Include="Resources\ceneo_logo.png" />
   </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\arrow_icon.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

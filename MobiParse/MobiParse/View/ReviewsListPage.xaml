@@ -17,7 +17,7 @@
                     <Label Grid.Row="1" Text="{Binding ProductInfoLbl}" VerticalOptions="StartAndExpand" HorizontalOptions="CenterAndExpand" FontAttributes="Bold" TextColor="Black" FontSize="22" />
                     <Label Grid.Row="2" Text="{Binding ProductCodeLbl}" VerticalOptions="StartAndExpand" HorizontalOptions="CenterAndExpand" TextColor="Black" FontSize="15"/>
 
-                    <ListView Grid.Row="3" HasUnevenRows="True" SeparatorVisibility="None" BackgroundColor="Transparent" ItemsSource="{Binding ReviewList}" >
+                    <ListView x:Name="ListOfReviews" Grid.Row="3" HasUnevenRows="True" SeparatorVisibility="None" BackgroundColor="Transparent" ItemsSource="{Binding ReviewList}" ItemSelected="OnItemSelected">
                         <ListView.ItemTemplate>
                             <DataTemplate>
                                 <ViewCell>

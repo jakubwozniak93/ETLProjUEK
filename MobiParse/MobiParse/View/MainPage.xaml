@@ -14,14 +14,24 @@
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
                         <RowDefinition Height="25*" />
                     </Grid.RowDefinitions>
                     <Image Grid.Row="1" Source="ceneo_logo.png" Aspect="AspectFit" />
                     <Label Grid.Row="3" Text="Wprowadz kod produktu"
                         VerticalOptions="CenterAndExpand" 
                         HorizontalOptions="CenterAndExpand" />
-                    <Entry x:Name="EntryProductKey" Grid.Row="4" HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand" Margin="25, 10, 25, 10" Keyboard="Numeric" MinimumHeightRequest="20" />
+                    <Entry x:Name="EntryProductKey" Grid.Row="4" HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand" Margin="25, 10, 25, 10" Keyboard="Numeric" MinimumHeightRequest="40" />
                     <Button Grid.Row="5" HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand" BackgroundColor="AliceBlue" Text="Rozpocznij proces ETL" Margin="25, 10, 25, 10" BorderWidth="1" BorderColor="Blue" Clicked="Button_Clicked"/>
+                    <StackLayout Grid.Row="6" HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand" Orientation="Horizontal" Margin="0,15,0,0">
+                        <Button HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand" BackgroundColor="AliceBlue" Text="E" Margin="10" BorderWidth="1" BorderColor="Blue" Clicked="Button_Clicked"/>
+                        <Image Source="arrow_icon.png" Aspect="AspectFit" />
+                        <Button HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand" BackgroundColor="AliceBlue" Text="T" Margin="10" BorderWidth="1" BorderColor="Blue" Clicked="Button_Clicked" IsEnabled="False"/>
+                        <Image Source="arrow_icon.png" Aspect="AspectFit" />
+                        <Button HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand" BackgroundColor="AliceBlue" Text="L" Margin="10" BorderWidth="1" BorderColor="Blue" Clicked="Button_Clicked" IsEnabled="False"/>
+                    </StackLayout>
+                    <Button Grid.Row="7" HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand" BackgroundColor="AliceBlue" Text="Baza Danych" Margin="25, 10, 25, 10" BorderWidth="1" BorderColor="Blue" Clicked="Button_Clicked"/>
+
                 </Grid>
             </ContentView>
         </AbsoluteLayout>

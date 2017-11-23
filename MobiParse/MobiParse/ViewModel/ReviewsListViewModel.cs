@@ -8,24 +8,24 @@ using System.Threading.Tasks;
 
 namespace MobiParse.ViewModel
 {
-    public class DetailViewModel : BaseViewModel
+    public class ReviewsListViewModel : BaseViewModel
     {
         private string _productInfoLbl;
         private string _productCodeLbl;
         private string _constProductIdlbl;
         private string _messageLbl;
         private bool _isOverlayVisible;
-        private List<ReviewDetailsViewModel> _reviewList;
+        private List<ReviewDetailsDataModel> _reviewList;
 
-        public DetailViewModel()
+        public ReviewsListViewModel()
         {
             _constProductIdlbl = "Kod produktu: ";
             _messageLbl = "Trwa proces ETL...";
-            ReviewList = new List<ReviewDetailsViewModel>();
+            ReviewList = new List<ReviewDetailsDataModel>();
         }
 
 
-        public List<ReviewDetailsViewModel> ReviewList
+        public List<ReviewDetailsDataModel> ReviewList
         {
             get
             {

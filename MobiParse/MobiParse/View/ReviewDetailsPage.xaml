@@ -1,0 +1,84 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MobiParse.View.ReviewDetailsPage">
+    <ContentPage.Content>
+        <AbsoluteLayout>
+            <ContentView Padding="25" AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0, 0, 1, 1">
+                <Grid AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0, 0, 1, 1" >
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="2*" />
+                        <RowDefinition Height="auto" />
+                        <RowDefinition Height="auto" />
+                        <RowDefinition Height="80*" />
+                        <RowDefinition Height="2*" />
+                    </Grid.RowDefinitions>
+                    <Label Grid.Row="1" Text="{Binding ProductInfoLbl}" VerticalOptions="StartAndExpand" HorizontalOptions="CenterAndExpand" FontAttributes="Bold" TextColor="Black" FontSize="22" />
+                    <Label Grid.Row="2" Text="{Binding ProductCodeLbl}" VerticalOptions="StartAndExpand" HorizontalOptions="CenterAndExpand" TextColor="Black" FontSize="15"/>
+
+                    <ListView x:Name="ListOfReviews" Grid.Row="3" HasUnevenRows="True" SeparatorVisibility="None" BackgroundColor="Transparent" ItemsSource="{Binding ReviewList}" >
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <ViewCell>
+                                    <Grid VerticalOptions="Fill" BackgroundColor="White" Padding="10" Margin="0,0,0,8">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="70*"/>
+                                            <ColumnDefinition Width="30*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="Auto" />
+                                        </Grid.RowDefinitions>
+                                        <Label Grid.Column="0" Grid.Row="0" Text="{Binding ReviewsCount}" FontAttributes="Bold" FontSize="20"/>
+                                        <BoxView Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" HeightRequest="1" Color="Gray" Margin="15,10,15,10" />
+                                        <Label Grid.Column="0" Grid.Row="2" Text="Nick: " FontSize="12" />
+                                        <Label Grid.Column="0" Grid.Row="3" Text="{Binding UserName}" FontAttributes="Bold" FontSize="15"/>
+                                        <Label Grid.Column="0" Grid.Row="4" Text="Status: " FontSize="12"/>
+                                        <Label Grid.Column="0" Grid.Row="5" Text="{Binding ReviewStatus}" FontAttributes="Bold" FontSize="15" />
+                                        <Label Grid.Column="0" Grid.Row="6" Text="Ocena: " FontSize="12"/>
+                                        <Label Grid.Column="0" Grid.Row="7" Text="{Binding ScoreValue}" FontAttributes="Bold" FontSize="15" />
+                                        <Label Grid.Column="0" Grid.Row="8" Text="Data: " FontAttributes="Bold" IsVisible="False"/>
+                                        <Label Grid.Column="0" Grid.Row="9" Text="{Binding DateTime}" IsVisible="False"/>
+                                        <Label Grid.Column="0" Grid.Row="10" Text="przydatna: " FontAttributes="Bold" IsVisible="False"/>
+                                        <Label Grid.Column="0" Grid.Row="11" Text="{Binding ReviewUseful}" IsVisible="False" />
+                                        <Label Grid.Column="0" Grid.Row="12" Text="nieprzydatna: " FontAttributes="Bold" IsVisible="False"/>
+                                        <Label Grid.Column="0" Grid.Row="13" Text="{Binding ReviewUnuseful}" IsVisible="False" />
+                                        <Label Grid.Column="0" Grid.Row="14" Text="Treść opinii: " FontAttributes="Bold" IsVisible="False"/>
+                                        <Label Grid.Column="0" Grid.Row="15" Grid.ColumnSpan="2" Text="{Binding ReviewText}" IsVisible="False" />
+                                        <BoxView Grid.Column="0" Grid.Row="16" Grid.ColumnSpan="2" HeightRequest="1" Color="Gray" Margin="15,10,15,10" />
+                                    </Grid>
+                                </ViewCell>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </Grid>
+            </ContentView>
+            <BoxView Color="#99000000" AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0.0, 0.0, 1.0, 1.0" IsVisible="{Binding IsOverlayVisible}" />
+            <Frame x:Name="loadingPhoneView" BackgroundColor="#F1F1F1" HasShadow="True" AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0.5, 0.5, 0.8, 0.3" CornerRadius="0" IsVisible="{Binding IsOverlayVisible}">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <ActivityIndicator Grid.Row="0" IsRunning="True" IsEnabled="True" Color="LightGray"/>
+                    <Label Grid.Row="1" FontSize="20" Text="{Binding MessageLbl}" VerticalTextAlignment="Center" HorizontalTextAlignment="Center" TextColor="Black" Margin="5, 1, 5, 1"/>
+                </Grid>
+            </Frame>
+        </AbsoluteLayout>
+    </ContentPage.Content>
+</ContentPage>

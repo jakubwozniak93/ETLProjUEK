@@ -16,7 +16,7 @@ namespace MobiParse.View
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class DetailPage : ContentPage
     {
-        public ViewModel.DetailViewModel viewModel;
+        public ViewModel.ReviewsListViewModel viewModel;
         public const string ceneoUrl = "https://www.ceneo.pl/";
         public const string ceneoUrlReviewFirstPage = "#tab=reviews";
         public const string ceneoUrlReviews = "/opinie-";
@@ -25,7 +25,7 @@ namespace MobiParse.View
         string urlReviews;
         string productInfo;
         List<string> userList;
-        List<ReviewDetailsViewModel> singleReviewData;
+        List<ReviewDetailsDataModel> singleReviewData;
         int reviewCounts = 0;
         string name, reviewStatus, scoreValue, dateTime, reviewText, reviewUseful, reviewUnuseful;
 
@@ -34,11 +34,26 @@ namespace MobiParse.View
             InitializeComponent();
             userList = new List<string>();
 
-            viewModel = new ViewModel.DetailViewModel();
+            viewModel = new ViewModel.ReviewsListViewModel();
             viewModel.IsOverlayVisible = true;
             BindingContext = viewModel;
             GetHTMLCodeAsync(producktId);
         }
+
+        async void OnItemSelected(object sender, SelectedItemChangedEventArgs args)
+        {
+            var item = args.SelectedItem as ReviewDetailsDataModel;
+            if (item == null)
+                return;
+
+            await Navigation.PushAsync(new ReviewDetailsPage(producktId));
+
+            // Manually deselect item
+            ListOfReviews.SelectedItem = null;
+        }
+
+        public object Item { get; private set; }
+
 
 
         public async Task GetHTMLCodeAsync(string producktId)
@@ -54,7 +69,7 @@ namespace MobiParse.View
         public async Task GetReviewInfo(string url)
         {
             
-            singleReviewData = new List<ReviewDetailsViewModel>();
+            singleReviewData = new List<ReviewDetailsDataModel>();
 
             string reviewInfo = await new HttpClient().GetStringAsync(new Uri(url+"1"));
 
@@ -178,7 +193,7 @@ namespace MobiParse.View
                         productCons.Add(allCons.InnerText.ToString());
                     }
 
-                    singleReviewData.Add(new ReviewDetailsViewModel()
+                    singleReviewData.Add(new ReviewDetailsDataModel()
                     {
                         UserName = name,
                         ReviewStatus = reviewStatus,
