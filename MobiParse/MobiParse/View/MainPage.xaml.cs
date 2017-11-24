@@ -34,7 +34,7 @@ namespace MobiParse
             }
             else
             {
-                producktId = "53290314";
+                producktId = "47044601";
             }
 
 

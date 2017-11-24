@@ -18,7 +18,7 @@
     <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
     <AndroidManifest>Properties\AndroidManifest.xml</AndroidManifest>
     <AndroidUseLatestPlatformSdk>true</AndroidUseLatestPlatformSdk>
-    <TargetFrameworkVersion>v7.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v8.0</TargetFrameworkVersion>
     <AndroidStoreUncompressedFileExtensions />
     <MandroidI18n />
     <JavaMaximumHeapSize />
@@ -140,6 +140,8 @@
     <AndroidResource Include="Resources\drawable-hdpi\icon.png" />
     <AndroidResource Include="Resources\drawable-xhdpi\icon.png" />
     <AndroidResource Include="Resources\drawable-xxhdpi\icon.png" />
+    <AndroidResource Include="Resources\drawable\delete_icon.png" />
+    <AndroidResource Include="Resources\drawable\save_icon.png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Properties\AndroidManifest.xml" />
@@ -151,7 +153,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MobiParse\MobiParse.csproj">
-      <Project>{1d944766-b79c-4a9b-8e57-f592ae16c956}</Project>
+      <Project>{63432D9F-FCBB-4F89-A4C4-5189DD70D038}</Project>
       <Name>MobiParse</Name>
     </ProjectReference>
   </ItemGroup>

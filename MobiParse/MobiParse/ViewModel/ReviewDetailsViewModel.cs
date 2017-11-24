@@ -16,8 +16,8 @@ namespace MobiParse.ViewModel
         public string _reviewText;
         public string _reviewUseful;
         public string _reviewUnuseful;
-        public List<string> _productPros;
-        public List<string> _productCons;
+        public string _productPros;
+        public string _productCons;
 
         public ReviewDetailsViewModel()
         {
@@ -28,11 +28,13 @@ namespace MobiParse.ViewModel
         {
             UserName = ReviewDetais.UserName;
             ReviewStatus = ReviewDetais.ReviewStatus;
-            ScoreValue = ReviewDetais.ReviewStatus;
+            ScoreValue = ReviewDetais.ScoreValue;
             DateTime = ReviewDetais.DateTime;
             ReviewText = ReviewDetais.ReviewText;
             ReviewUseful = ReviewDetais.ReviewUseful;
             ReviewUnuseful = ReviewDetais.ReviewUnuseful;
+            ProductProsToString(ReviewDetais.ProductPros);
+            ProductConsToString(ReviewDetais.ProductCons);
         }
 
         public string UserName
@@ -119,10 +121,44 @@ namespace MobiParse.ViewModel
                 RaisePropertyChanged(nameof(ReviewUnuseful));
             }
         }
-        public List<string> ProductPros { get; set; }
-        public List<string> ProductCons { get; set; }
+        public string ProductPros
+        {
+            get
+            {
+                return _productPros;
+            }
+            set
+            {
+                _productPros = value;
+                RaisePropertyChanged(nameof(ProductPros));
+            }
+        }
+        public string ProductCons
+        {
+            get
+            {
+                return _productCons;
+            }
+            set
+            {
+                _productCons = value;
+                RaisePropertyChanged(nameof(ProductCons));
+            }
+        }
 
+        public void ProductProsToString (List<string> productPros)
+        {
+            string combindedString = string.Join(";", productPros.ToArray());
+            combindedString = combindedString.Replace(";", "; \n");
+            ProductPros = combindedString;
+        }
 
+        public void ProductConsToString(List<string> productCons)
+        {
+            string combindedString = string.Join(";", productCons.ToArray());
+            combindedString.Replace(";","; \n");
+            ProductCons = combindedString;
+        }
 
     }
 }

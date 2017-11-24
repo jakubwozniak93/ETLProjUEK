@@ -21,7 +21,6 @@ namespace MobiParse.View
         public const string ceneoUrlReviewFirstPage = "#tab=reviews";
         public const string ceneoUrlReviews = "/opinie-";
         public string htmlCode;
-        string urlReview;
         string urlReviews;
         string productInfo;
         List<string> userList;
@@ -93,7 +92,7 @@ namespace MobiParse.View
             HtmlNode reviewsCountNode = doc.DocumentNode.Descendants("span").Where(x => x.Attributes.Contains("itemprop") && x.Attributes["itemprop"].Value == "reviewCount").FirstOrDefault();
             int reviewCount = (int.Parse(reviewsCountNode.InnerText.ToString())) / 10;
             List<HtmlNode[]> allInfoNodesArray = new List<HtmlNode[]>();
-            for (int i = 1; i < reviewCount; i++)
+            for (int i = 1; i <= reviewCount+1; i++)
             {
                 reviewInfo = await new HttpClient().GetStringAsync(new Uri(url + i));
                 doc.LoadHtml(reviewInfo);
@@ -178,9 +177,11 @@ namespace MobiParse.View
                     reviewPros.LoadHtml(allInfoPros.InnerHtml);
                     HtmlNode[] InfoPros = reviewPros.DocumentNode.Descendants("li").ToArray();
                     List<string> productPros = new List<string>();
+                    int i = 0;
                     foreach (HtmlNode allPros in InfoPros)
                     {
-                        productPros.Add(allPros.InnerText.ToString());
+                        i++;
+                        productPros.Add(i.ToString() +".)"+ allPros.InnerText.ToString());
                     }
                     //get product cons
                     HtmlNode allInfoCons = review.DocumentNode.Descendants("div").Where(x => x.Attributes.Contains("class") && x.Attributes["class"].Value == "cons-cell").FirstOrDefault();
@@ -188,9 +189,11 @@ namespace MobiParse.View
                     reviewCons.LoadHtml(allInfoCons.InnerHtml);
                     HtmlNode[] InfoCons = reviewCons.DocumentNode.Descendants("li").ToArray();
                     List<string> productCons = new List<string>();
+                    i = 0;
                     foreach (HtmlNode allCons in InfoCons)
                     {
-                        productCons.Add(allCons.InnerText.ToString());
+                        i++;
+                        productCons.Add(i.ToString() + ".)" + allCons.InnerText.ToString());
                     }
 
                     singleReviewData.Add(new ReviewDetailsDataModel()
