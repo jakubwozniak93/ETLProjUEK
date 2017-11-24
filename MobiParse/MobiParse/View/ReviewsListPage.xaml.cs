@@ -46,7 +46,7 @@ namespace MobiParse.View
             if (item == null)
                 return;
 
-            await Navigation.PushAsync(new ReviewDetailsPage(producktId));
+            await Navigation.PushAsync(new ReviewDetailsPage(item));
 
             // Manually deselect item
             ListOfReviews.SelectedItem = null;

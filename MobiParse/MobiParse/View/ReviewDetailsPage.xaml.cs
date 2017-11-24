@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using MobiParse.ViewModel;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -12,13 +12,14 @@ namespace MobiParse.View
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class ReviewDetailsPage : ContentPage
     {
-        public ViewModel.ReviewsListViewModel viewModel;
+        public ReviewDetailsViewModel viewModel;
 
-        public ReviewDetailsPage()
+        public ReviewDetailsPage(ReviewDetailsDataModel item)
         {
             InitializeComponent();
-            viewModel = new ViewModel.ReviewsListViewModel();
+            viewModel = new ReviewDetailsViewModel();
             BindingContext = viewModel;
+            viewModel.GetReviewDetails(item);
         }
     }
 }
