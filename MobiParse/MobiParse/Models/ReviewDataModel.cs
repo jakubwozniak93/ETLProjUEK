@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace MobiParse.Models
 {
-    public class DataModels
+    public class ReviewDataModels
     {
         [AutoIncrement, PrimaryKey]
         public int ID { get; set; }

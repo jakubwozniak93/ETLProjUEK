@@ -21,5 +21,10 @@ namespace MobiParse.View
             BindingContext = viewModel;
             viewModel.GetReviewDetails(item);
         }
+
+        async void OnClick(object sender, EventArgs e)  
+        {  
+            await Navigation.PushAsync(new MainPage());
+        } 
     }
 }

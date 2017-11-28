@@ -3,11 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using SQLite.Net.Attributes;
 
 namespace MobiParse.ViewModel
 {
     public class ReviewDetailsDataModel : BaseViewModel
     {
+        [AutoIncrement, PrimaryKey]
+        public int ID { get; set; }
         public string UserName { get; set; }
         public string ReviewStatus { get; set; }
         public string ScoreValue { get; set; }

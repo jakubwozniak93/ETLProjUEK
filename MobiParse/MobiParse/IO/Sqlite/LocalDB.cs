@@ -22,7 +22,9 @@ namespace MobiParse.IO.Sqlite
         {
             db = DependencyService.Get<ISqliteConnection>().GetConnection();
 
-            CreateTablesResult created = await db.CreateTableAsync<DataModels>();
+            CreateTablesResult createdCategoryTable = await db.CreateTableAsync<CategoryDataModels>();
+            CreateTablesResult createdProductTable = await db.CreateTableAsync<ProductDataModels>();
+
         }
 
         internal void ClearAll()
@@ -31,25 +33,25 @@ namespace MobiParse.IO.Sqlite
             Init();
         }
 
-        internal async Task<IList<DataModels>> GetExamples()
+        internal async Task<IList<CategoryDataModels>> GetExamples()
         {
-            List<DataModels> list = await db.Table<DataModels>().ToListAsync();
+            List<CategoryDataModels> list = await db.Table<CategoryDataModels>().ToListAsync();
             return list;
         }
 
-        internal async Task<DataModels> GetWork(int id)
+        internal async Task<CategoryDataModels> GetWork(int id)
         {
-            DataModels w = await db.Table<DataModels>().Where(x => x.ID == id).FirstOrDefaultAsync();
+            CategoryDataModels w = await db.Table<CategoryDataModels>().Where(x => x.ID == id).FirstOrDefaultAsync();
             return w;
         }
 
-        internal async Task<bool> InserExample(DataModels example)
+        internal async Task<bool> InserExample(CategoryDataModels example)
         {
             int res = await db.InsertAsync(example);
             return res != -1;
         }
 
-        internal async Task<bool> UpdateWork(DataModels example)
+        internal async Task<bool> UpdateWork(CategoryDataModels example)
         {
             int res = await db.UpdateAsync(example);
             return res != -1;

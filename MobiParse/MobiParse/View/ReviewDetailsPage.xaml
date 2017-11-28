@@ -46,5 +46,9 @@
             </ContentView>
 
         </AbsoluteLayout>
+         
     </ContentPage.Content>
+    <ContentPage.ToolbarItems>  
+            <ToolbarItem Name="iconexample" Icon="delete_icon.png" Priority="0" Order="Primary" Activated="OnClick" />  
+        </ContentPage.ToolbarItems> 
 </ContentPage>

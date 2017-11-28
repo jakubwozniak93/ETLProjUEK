@@ -23,6 +23,7 @@ namespace MobiParse.View
         public string htmlCode;
         string urlReviews;
         string productInfo;
+        string CategoryProductInfo;
         List<string> userList;
         List<ReviewDetailsDataModel> singleReviewData;
         int reviewCounts = 0;
@@ -51,9 +52,14 @@ namespace MobiParse.View
             ListOfReviews.SelectedItem = null;
         }
 
+
+
         public object Item { get; private set; }
 
-
+        async void OnClick(object sender, EventArgs e)  
+        {  
+            await Navigation.PushAsync(new MainPage());
+        } 
 
         public async Task GetHTMLCodeAsync(string producktId)
         {
@@ -83,6 +89,12 @@ namespace MobiParse.View
             //    result = result + node.OuterHtml;
 
             //}
+
+            HtmlNode[] CategoryOfproductInfoNode = doc.DocumentNode.Descendants("span").Where(x => x.Attributes.Contains("itemprop") && x.Attributes["itemprop"].Value == "title").ToArray();
+            if (CategoryOfproductInfoNode != null)
+            {
+                CategoryProductInfo = CategoryOfproductInfoNode[3].InnerText.ToString();
+            }
 
             HtmlNode productInfoNode = doc.DocumentNode.Descendants("h2").Where(x => x.Attributes.Contains("class") && x.Attributes["class"].Value == "section-title with-context header-curl").FirstOrDefault();
             productInfo = productInfoNode.InnerText.ToString();
