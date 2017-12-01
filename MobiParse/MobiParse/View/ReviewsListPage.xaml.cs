@@ -14,7 +14,7 @@ using Xamarin.Forms.Xaml;
 namespace MobiParse.View
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class DetailPage : ContentPage
+    public partial class ReviewsListPage : ContentPage
     {
         public ViewModel.ReviewsListViewModel viewModel;
         public const string ceneoUrl = "https://www.ceneo.pl/";
@@ -25,11 +25,22 @@ namespace MobiParse.View
         string productInfo;
         string CategoryProductInfo;
         List<string> userList;
-        List<ReviewDetailsDataModel> singleReviewData;
+        ObservableCollection<ReviewDetailsDataModel> singleReviewData;
         int reviewCounts = 0;
-        string name, reviewStatus, scoreValue, dateTime, reviewText, reviewUseful, reviewUnuseful;
+        string name, reviewStatus, scoreValue, dateTime, reviewText, reviewUseful, reviewUnuseful, outerHtml;
 
-        public DetailPage(string producktId)
+        private void ListOfReviews_ItemTapped(object sender, ItemTappedEventArgs e)
+        {
+            var item = BindingContext as ReviewsListViewModel;
+            if (item == null)
+                return;
+
+            var review = e.Item as ReviewDetailsDataModel;
+            item.HideOrShowDetails(review);
+            //viewModel.ReviewList = viewModel.ReviewList;
+        }
+
+        public ReviewsListPage(string producktId)
         {
             InitializeComponent();
             userList = new List<string>();
@@ -74,7 +85,7 @@ namespace MobiParse.View
         public async Task GetReviewInfo(string url)
         {
             
-            singleReviewData = new List<ReviewDetailsDataModel>();
+            singleReviewData = new ObservableCollection<ReviewDetailsDataModel>();
 
             string reviewInfo = await new HttpClient().GetStringAsync(new Uri(url+"1"));
 
@@ -150,35 +161,44 @@ namespace MobiParse.View
                     }
                     //get user score value
                     HtmlNode scoreValueNode = review.DocumentNode.Descendants("span").Where(x => x.Attributes.Contains("class") && x.Attributes["class"].Value == "review-score-count").FirstOrDefault();
-                    if (reviewStatusNode != null)
+                    if (scoreValueNode != null)
                     {
                         scoreValue = scoreValueNode.InnerText.ToString();
                         scoreValue = scoreValue.Replace("\r\n", string.Empty).Replace(" ", string.Empty);
                     }
                     //get review datetime
                     HtmlNode dateTimeNode = review.DocumentNode.Descendants("time").Where(x => x.Attributes.Contains("datetime")).FirstOrDefault();
-                    if (reviewStatusNode != null)
+                    if (dateTimeNode != null)
                     {
                         dateTime = dateTimeNode.InnerText.ToString();
                         dateTime = dateTime.Replace("\r\n", string.Empty);
                     }
+                    //get review datetime
+                    //HtmlNode dateTimeNode = review.DocumentNode.Descendants("span").Where(x => x.Attributes.Contains("class") && x.Attributes["class"].Value == "review-time").FirstOrDefault();
+                    //if (dateTimeNode != null)
+                    //{
+                    //    outerHtml = dateTimeNode.OuterHtml.ToString();
+                    //    char splitter = '\"';
+                    //    string[] outerHtml2 = outerHtml.Split();
+                    //    dateTime = outerHtml2[4];
+                    //}
                     //get review text
                     HtmlNode reviewTextNode = review.DocumentNode.Descendants("p").Where(x => x.Attributes.Contains("class") && x.Attributes["class"].Value == "product-review-body").FirstOrDefault();
-                    if (reviewStatusNode != null)
+                    if (reviewTextNode != null)
                     {
                         reviewText = reviewTextNode.InnerText.ToString();
                         reviewText = reviewText.Replace("\r\n", string.Empty);
                     }
                     //get review useful
                     HtmlNode reviewUsefulNode = review.DocumentNode.Descendants("button").Where(x => x.Attributes.Contains("class") && x.Attributes["class"].Value == "vote-yes js_product-review-vote js_vote-yes").FirstOrDefault();
-                    if (reviewStatusNode != null)
+                    if (reviewUsefulNode != null)
                     {
                         reviewUseful = reviewUsefulNode.InnerText.ToString();
                         reviewUseful = reviewUseful.Replace("\r\n", string.Empty);
                     }
                     //get review unuseful
                     HtmlNode reviewUnusefulNode = review.DocumentNode.Descendants("button").Where(x => x.Attributes.Contains("class") && x.Attributes["class"].Value == "vote-no js_product-review-vote js_vote-no").FirstOrDefault();
-                    if (reviewStatusNode != null)
+                    if (reviewUnusefulNode != null)
                     {
                         reviewUnuseful = reviewUnusefulNode.InnerText.ToString();
                         reviewUnuseful = reviewUnuseful.Replace("\r\n", string.Empty);
@@ -188,25 +208,27 @@ namespace MobiParse.View
                     HtmlAgilityPack.HtmlDocument reviewPros = new HtmlAgilityPack.HtmlDocument();
                     reviewPros.LoadHtml(allInfoPros.InnerHtml);
                     HtmlNode[] InfoPros = reviewPros.DocumentNode.Descendants("li").ToArray();
-                    List<string> productPros = new List<string>();
+                    string productPros = "";
                     int i = 0;
                     foreach (HtmlNode allPros in InfoPros)
                     {
                         i++;
-                        productPros.Add(i.ToString() +".)"+ allPros.InnerText.ToString());
+                        productPros = productPros + i.ToString() + ".) " + allPros.InnerText.ToString() + "\n";
+
                     }
                     //get product cons
                     HtmlNode allInfoCons = review.DocumentNode.Descendants("div").Where(x => x.Attributes.Contains("class") && x.Attributes["class"].Value == "cons-cell").FirstOrDefault();
                     HtmlAgilityPack.HtmlDocument reviewCons = new HtmlAgilityPack.HtmlDocument();
                     reviewCons.LoadHtml(allInfoCons.InnerHtml);
                     HtmlNode[] InfoCons = reviewCons.DocumentNode.Descendants("li").ToArray();
-                    List<string> productCons = new List<string>();
+                    string productCons = "";
                     i = 0;
                     foreach (HtmlNode allCons in InfoCons)
                     {
                         i++;
-                        productCons.Add(i.ToString() + ".)" + allCons.InnerText.ToString());
+                        productCons = productCons + i.ToString() + ".) " + allCons.InnerText.ToString() + "\n";
                     }
+
 
                     singleReviewData.Add(new ReviewDetailsDataModel()
                     {
@@ -219,7 +241,9 @@ namespace MobiParse.View
                         ReviewUnuseful = reviewUnuseful,
                         ProductPros = productPros,
                         ProductCons = productCons,
-                        ReviewsCount = reviewCounts
+                        ReviewsCount = reviewCounts,
+                        IsVisible = false
+                        
                     });
                 }
             }catch(Exception ex)

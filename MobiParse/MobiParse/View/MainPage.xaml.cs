@@ -38,7 +38,7 @@ namespace MobiParse
             }
 
 
-            await Navigation.PushAsync(new DetailPage(producktId));
+            await Navigation.PushAsync(new ReviewsListPage(producktId));
         }
         
 

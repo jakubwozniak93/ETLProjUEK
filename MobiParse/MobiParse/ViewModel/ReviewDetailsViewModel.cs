@@ -33,8 +33,8 @@ namespace MobiParse.ViewModel
             ReviewText = ReviewDetais.ReviewText;
             ReviewUseful = ReviewDetais.ReviewUseful;
             ReviewUnuseful = ReviewDetais.ReviewUnuseful;
-            ProductProsToString(ReviewDetais.ProductPros);
-            ProductConsToString(ReviewDetais.ProductCons);
+            //ProductProsToString(ReviewDetais.ProductPros);
+            //ProductConsToString(ReviewDetais.ProductCons);
         }
 
         public string UserName

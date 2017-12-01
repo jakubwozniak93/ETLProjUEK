@@ -18,9 +18,10 @@ namespace MobiParse.ViewModel
         public string ReviewText { get; set; }
         public string ReviewUseful { get; set; }
         public string ReviewUnuseful { get; set; }
-        public List<string> ProductPros { get; set; }
-        public List<string> ProductCons { get; set; }
+        public string ProductPros { get; set; }
+        public string ProductCons { get; set; }
         public int ReviewsCount { get; set; }
+        public bool IsVisible { get; set; }
 
     }
 }
