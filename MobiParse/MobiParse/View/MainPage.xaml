@@ -2,35 +2,57 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:MobiParse"
-             x:Class="MobiParse.MainPage">
+             x:Class="MobiParse.MainPage"
+             BackgroundColor="White">
     <ContentPage.Content>
         <AbsoluteLayout>
             <ContentView Padding="25" AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0, 0, 1, 1">
                 <Grid AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0, 0, 1, 1" >
                     <Grid.RowDefinitions>
                         <RowDefinition Height="10*" />
-                        <RowDefinition Height="5*" />
-                        <RowDefinition Height="10*" />
+                        <RowDefinition Height="15*" />
+                        <RowDefinition Height="*" />
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
-                        <RowDefinition Height="25*" />
                     </Grid.RowDefinitions>
-                    <Image Grid.Row="1" Source="ceneo_logo.png" Aspect="AspectFit" />
-                    <Label Grid.Row="3" Text="Wprowadz kod produktu"
-                        VerticalOptions="CenterAndExpand" 
-                        HorizontalOptions="CenterAndExpand" />
-                    <Entry x:Name="EntryProductKey" Grid.Row="4" HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand" Margin="25, 10, 25, 10" Keyboard="Numeric" MinimumHeightRequest="40" />
-                    <Button Grid.Row="5" HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand" BackgroundColor="AliceBlue" Text="Rozpocznij proces ETL" Margin="25, 10, 25, 10" BorderWidth="1" BorderColor="Blue" Clicked="Button_Clicked"/>
-                    <StackLayout Grid.Row="6" HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand" Orientation="Horizontal" Margin="0,15,0,0">
-                        <Button HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand" BackgroundColor="AliceBlue" Text="E" Margin="10" BorderWidth="1" BorderColor="Blue" Clicked="Button_Clicked"/>
-                        <Image Source="arrow_icon.png" Aspect="AspectFit" />
-                        <Button HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand" BackgroundColor="AliceBlue" Text="T" Margin="10" BorderWidth="1" BorderColor="Blue" Clicked="Button_Clicked" IsEnabled="False"/>
-                        <Image Source="arrow_icon.png" Aspect="AspectFit" />
-                        <Button HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand" BackgroundColor="AliceBlue" Text="L" Margin="10" BorderWidth="1" BorderColor="Blue" Clicked="Button_Clicked" IsEnabled="False"/>
-                    </StackLayout>
-                    <Button Grid.Row="7" HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand" BackgroundColor="AliceBlue" Text="Baza Danych" Margin="25, 10, 25, 10" BorderWidth="1" BorderColor="Blue" Clicked="Button_Clicked"/>
+                    <Image Grid.Row="1" Source="ceneo_logo.png" Aspect="AspectFit" Margin="0,0,0,25"/>
+                    <Frame BackgroundColor="#F39729" Grid.Row="3" HasShadow="False" Margin="25, 10, 25, 10" Padding="1" CornerRadius="5">
+                        <Frame BackgroundColor="White" Grid.Row="4" HasShadow="False"  Padding="2" CornerRadius="5">
+                            <Entry x:Name="EntryProductKey" Placeholder="Wprowadz kod produktu" Keyboard="Numeric" MinimumHeightRequest="40" BackgroundColor="White" />
+                        </Frame>
+                    </Frame>
+                    <Button x:Name="etlButton" Grid.Row="4" HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand" Text="Rozpocznij proces ETL" Margin="25, 10, 25, 10" BackgroundColor="#303030" TextColor="White" Clicked="Button_Clicked"/>
+                    <Grid Grid.Row="5" HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand" Margin="25, 10, 25, 10" >
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="30*"/>
+                            <ColumnDefinition Width="30*"/>
+                            <ColumnDefinition Width="30*"/>
+                        </Grid.ColumnDefinitions>
+                        <Image x:Name="extractButton" Grid.Column="0" Source="e_inactive.png" Aspect="AspectFit" HorizontalOptions="Start" InputTransparent="True">
+                            <Image.GestureRecognizers>
+                                <TapGestureRecognizer
+                                    Tapped="ExtractClicked"
+                                    NumberOfTapsRequired="1" />
+                            </Image.GestureRecognizers>
+                        </Image>
+                        <Image x:Name="transformButton" Grid.Column="1" Source="t_inactive.png" Aspect="AspectFit" HorizontalOptions="Center" InputTransparent="True">
+                            <Image.GestureRecognizers>
+                                <TapGestureRecognizer
+                                    Tapped="ExtractClicked"
+                                    NumberOfTapsRequired="1" />
+                            </Image.GestureRecognizers>
+                        </Image>
+                        <Image x:Name="loadButton" Grid.Column="2" Source="l_inactive.png" Aspect="AspectFit" HorizontalOptions="End" InputTransparent="True">
+                            <Image.GestureRecognizers>
+                                <TapGestureRecognizer
+                                    Tapped="ExtractClicked"
+                                    NumberOfTapsRequired="1" />
+                            </Image.GestureRecognizers>
+                        </Image>
+                    </Grid>
+                    <Button Grid.Row="6" HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand" BackgroundColor="#F39729" Text="Baza Danych" TextColor="White" Margin="25, 10, 25, 10" Clicked="Button_Clicked"/>
 
                 </Grid>
             </ContentView>

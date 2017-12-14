@@ -1,5 +1,4 @@
-﻿using MobiParse.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -8,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace MobiParse.ViewModel
 {
-    public class ReviewsListViewModel : BaseViewModel
+    public class ExtractListViewModel :BaseViewModel
     {
         private string _productInfoLbl;
         private string _productCodeLbl;
@@ -20,12 +19,12 @@ namespace MobiParse.ViewModel
         public string _productPros;
         public string _productCons;
 
-        public ReviewsListViewModel()
+        public ExtractListViewModel()
         {
             _constProductIdlbl = "Kod produktu: ";
-            _messageLbl = "Trwa proces ETL...";
+            _messageLbl = "Trwa proces EXTRACT...";
             ReviewList = new ObservableCollection<ReviewDetailsDataModel>();
-            
+
         }
 
 
@@ -57,13 +56,14 @@ namespace MobiParse.ViewModel
 
         public void HideOrShowDetails(ReviewDetailsDataModel review)
         {
-            if(_oldReview == review)
+            if (_oldReview == review)
             {
                 review.IsVisible = !review.IsVisible;
                 UpdateReviews(review);
-            }else
+            }
+            else
             {
-                if(_oldReview != null)
+                if (_oldReview != null)
                 {
                     _oldReview.IsVisible = false;
                     UpdateReviews(_oldReview);
@@ -159,6 +159,5 @@ namespace MobiParse.ViewModel
             combindedString.Replace(";", "; \n");
             ProductCons = combindedString;
         }
-
     }
 }

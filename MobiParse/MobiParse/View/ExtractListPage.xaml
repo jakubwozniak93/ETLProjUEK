@@ -1,0 +1,83 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MobiParse.View.ExtractListPage"
+             Title="Extract">
+    <ContentPage.Content>
+        <AbsoluteLayout>
+            <ContentView Padding="25" AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0, 0, 1, 1">
+                <Grid AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0, 0, 1, 1" >
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="2*" />
+                        <RowDefinition Height="80*" />
+                        <RowDefinition Height="40" />
+                    </Grid.RowDefinitions>
+                    <ListView x:Name="ListOfReviews" Grid.Row="1" HasUnevenRows="True" SeparatorVisibility="None" BackgroundColor="Transparent" ItemsSource="{Binding ReviewList}" >
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <ViewCell>
+                                    <Grid VerticalOptions="Fill" BackgroundColor="Aqua" Padding="10" Margin="0,0,0,8">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="Auto" />
+                                            
+                                        </Grid.RowDefinitions>
+                                            <Label Grid.Row="0" Text="{Binding ReviewsCount}" FontAttributes="Bold" FontSize="20"/>
+                                            <Label Grid.Row="1" Text="Nick: " FontSize="13" />
+                                            <Label Grid.Row="2" Text="{Binding UserName}" FontAttributes="Bold" FontSize="15"/>
+                                            <Label Grid.Row="3" Text="Status: " FontSize="13"/>
+                                            <Label Grid.Row="4" Text="{Binding ReviewStatus}" FontAttributes="Bold" FontSize="15" />
+                                            <Label Grid.Row="5" Text="Ocena: " FontSize="13"/>
+                                            <Label Grid.Row="6" Text="{Binding ScoreValue}" FontAttributes="Bold" FontSize="15" />
+                                            <Label Grid.Row="7" Text="Data: " FontSize="15" FontAttributes="Bold"/>
+                                            <Label Grid.Row="8" Text="{Binding DateTime}" FontSize="15"/>
+                                            <Label Grid.Row="9" Text="przydatna: " FontSize="15" FontAttributes="Bold"/>
+                                            <Label Grid.Row="10" Text="{Binding ReviewUseful}" FontSize="15"/>
+                                            <Label Grid.Row="11" Text="nieprzydatna: " FontSize="15" FontAttributes="Bold"/>
+                                            <Label Grid.Row="12" Text="{Binding ReviewUnuseful}" FontSize="15"/>
+                                            <Label Grid.Row="13" Text="Zalety: " FontSize="15" FontAttributes="Bold"/>
+                                            <Label Grid.Row="14" Text="{Binding ProductPros}" FontSize="15"/>
+                                            <Label Grid.Row="15" Text="Wady: " FontSize="15" FontAttributes="Bold"/>
+                                            <Label Grid.Row="16" Text="{Binding ProductCons}" FontSize="15"/>
+                                            <Label Grid.Row="17" Text="Treść opinii: " FontSize="15" FontAttributes="Bold"/>
+                                        <Label Grid.Row="18" Grid.ColumnSpan="2" Text="{Binding ReviewText}" FontSize="13"/>
+                                    </Grid>
+                                </ViewCell>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                    <Button Grid.Row="2" Text="Transform 2/3" HeightRequest="40" HorizontalOptions="FillAndExpand" BackgroundColor="Blue" Margin="0" />
+                </Grid>
+            </ContentView>
+            <BoxView Color="#99000000" AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0.0, 0.0, 1.0, 1.0" IsVisible="{Binding IsOverlayVisible}" />
+            <Frame x:Name="loadingPhoneView" BackgroundColor="#F1F1F1" HasShadow="True" AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0.5, 0.5, 0.8, 0.3" CornerRadius="0" IsVisible="{Binding IsOverlayVisible}">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <ActivityIndicator Grid.Row="0" IsRunning="True" IsEnabled="True" Color="LightGray"/>
+                    <Label Grid.Row="1" FontSize="20" Text="{Binding MessageLbl}" VerticalTextAlignment="Center" HorizontalTextAlignment="Center" TextColor="Black" Margin="5, 1, 5, 1"/>
+                </Grid>
+            </Frame>
+        </AbsoluteLayout>
+    </ContentPage.Content>
+</ContentPage>

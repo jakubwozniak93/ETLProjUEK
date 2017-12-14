@@ -22,8 +22,8 @@ namespace MobiParse.IO.Sqlite
         {
             db = DependencyService.Get<ISqliteConnection>().GetConnection();
 
-            CreateTablesResult createdCategoryTable = await db.CreateTableAsync<CategoryDataModels>();
-            CreateTablesResult createdProductTable = await db.CreateTableAsync<ProductDataModels>();
+            CreateTablesResult CategoryTable = await db.CreateTableAsync<CategoryDataModels>();
+            CreateTablesResult ProductTable = await db.CreateTableAsync<ProductDataModels>();
 
         }
 
@@ -39,10 +39,10 @@ namespace MobiParse.IO.Sqlite
             return list;
         }
 
-        internal async Task<CategoryDataModels> GetWork(int id)
+        internal async Task<CategoryDataModels> GetCategory(int id)
         {
-            CategoryDataModels w = await db.Table<CategoryDataModels>().Where(x => x.ID == id).FirstOrDefaultAsync();
-            return w;
+            CategoryDataModels c = await db.Table<CategoryDataModels>().Where(x => x.ID == id).FirstOrDefaultAsync();
+            return c;
         }
 
         internal async Task<bool> InserExample(CategoryDataModels example)
