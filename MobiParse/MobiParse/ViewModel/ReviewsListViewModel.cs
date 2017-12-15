@@ -5,6 +5,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Xamarin.Forms;
 
 namespace MobiParse.ViewModel
 {
@@ -17,13 +18,18 @@ namespace MobiParse.ViewModel
         private bool _isOverlayVisible;
         private ReviewDetailsDataModel _oldReview;
         private ObservableCollection<ReviewDetailsDataModel> _reviewList;
+        private ImageSource _expandIcon = ImageSource.FromFile("ic_expand_more_black_48dp.png");
+        private ImageSource _collapseIcon = ImageSource.FromFile("ic_expand_less_black_48dp.png");
+        private ImageSource _showDetailsIcon;
         public string _productPros;
         public string _productCons;
+
 
         public ReviewsListViewModel()
         {
             _constProductIdlbl = "Kod produktu: ";
             _messageLbl = "Trwa proces ETL...";
+            ShowDetailsIcon = _expandIcon;
             ReviewList = new ObservableCollection<ReviewDetailsDataModel>();
             
         }
@@ -79,6 +85,14 @@ namespace MobiParse.ViewModel
             var index = ReviewList.IndexOf(review);
             ReviewList.Remove(review);
             ReviewList.Insert(index, review);
+            if (review.IsVisible)
+            {
+                ShowDetailsIcon = _expandIcon;
+            }
+            else
+            {
+                ShowDetailsIcon = _collapseIcon;
+            }
             //ReviewList = ReviewList;
         }
 
@@ -159,6 +173,17 @@ namespace MobiParse.ViewModel
             combindedString.Replace(";", "; \n");
             ProductCons = combindedString;
         }
+
+        public ImageSource ShowDetailsIcon
+        {
+            get { return _showDetailsIcon; }
+            set
+            {
+                _showDetailsIcon = value;
+                RaisePropertyChanged(nameof(ShowDetailsIcon));
+            }
+        }
+
 
     }
 }

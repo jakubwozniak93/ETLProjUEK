@@ -39,6 +39,8 @@ namespace MobiParse
                 producktId = "55381561";
                 //iphone 7
                 //producktId = "47044601";
+                // xiaomi a1
+                producktId = "46943265";
             }
 
 

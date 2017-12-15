@@ -38,10 +38,10 @@
                                             <RowDefinition Height="Auto" />
                                         </Grid.RowDefinitions>
                                         <Label Grid.Column="0" Grid.Row="0" Text="{Binding ReviewsCount}" FontAttributes="Bold" FontSize="20"/>
-                                        <Image Grid.Column="1" Grid.Row="1" Source="ic_expand_more_black_48dp.png" HeightRequest="20" WidthRequest="20" Scale="1" HorizontalOptions="End" Grid.RowSpan="2" Margin="0,0,10,0"/>
+                                        <Image Grid.Column="1" Grid.Row="0" Source="{Binding ShowDetailsIcon}" HeightRequest="20" WidthRequest="20" Scale="1" HorizontalOptions="End" Grid.RowSpan="2" Margin="0,0,10,0"/>
                                         <Label Grid.Column="0" Grid.Row="1" Text="{Binding UserName}" FontAttributes="Bold" FontSize="15"/>
                                         <Label Grid.Column="0" Grid.Row="3" Text="{Binding ReviewStatus}" FontAttributes="Bold" FontSize="15" />
-                                        <Image Grid.Column="1" Grid.Row="3" Source="ic_delete_black_48dp.png" HeightRequest="20" WidthRequest="20" Scale="1" Grid.RowSpan="2" HorizontalOptions="End" Margin="0,0,10,0"/>
+                                        <Image Grid.Column="1" Grid.Row="2" Source="ic_delete_black_48dp.png" HeightRequest="20" WidthRequest="20" Scale="1" Grid.RowSpan="2" HorizontalOptions="End" Margin="0,0,10,0"/>
                                         <Image Grid.Column="1" Grid.Row="4" Source="ic_content_copy_black_48dp.png" HeightRequest="20" WidthRequest="20" Scale="1" Grid.RowSpan="2" HorizontalOptions="End" Margin="0,0,10,0"/>
 
                                         <Label Grid.Column="0" Grid.Row="5" Text="{Binding ScoreValue}" FontAttributes="Bold" FontSize="15" />

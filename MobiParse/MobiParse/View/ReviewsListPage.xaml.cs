@@ -27,7 +27,7 @@ namespace MobiParse.View
         List<string> userList;
         ObservableCollection<ReviewDetailsDataModel> singleReviewData;
         int reviewCounts = 0;
-        string name, reviewStatus, scoreValue, dateTime, reviewText, reviewUseful, reviewUnuseful, outerHtml;
+        string name, reviewStatus, scoreValue, dateTime, reviewText, reviewUseful, reviewUnuseful, urlDetails;
 
         private void ListOfReviews_ItemTapped(object sender, ItemTappedEventArgs e)
         {
@@ -61,7 +61,7 @@ namespace MobiParse.View
         public async Task GetHTMLCodeAsync(string producktId)
         {
             viewModel.ProductCodeLbl = producktId;
-            urlReviews = ceneoUrl + producktId + ceneoUrlReviews;
+            urlReviews = ceneoUrl + producktId;
             //var response = await new HttpClient().GetAsync(urlReview, urlReviews);
             //await GetProductInfo(producktId);
             //await GetProductInfo(urlReview);
@@ -70,14 +70,20 @@ namespace MobiParse.View
         
         public async Task GetReviewInfo(string url)
         {
+            urlDetails = url + "#tab=spec";
+            url = url + ceneoUrlReviews;
             
             singleReviewData = new ObservableCollection<ReviewDetailsDataModel>();
 
             string reviewInfo = await new HttpClient().GetStringAsync(new Uri(url+"1"));
+            string productInfoDetails = await new HttpClient().GetStringAsync(new Uri(urlDetails));
 
             HtmlAgilityPack.HtmlDocument doc = new HtmlAgilityPack.HtmlDocument();
             doc.LoadHtml(reviewInfo);
 
+
+            HtmlAgilityPack.HtmlDocument docInfo = new HtmlAgilityPack.HtmlDocument();
+            docInfo.LoadHtml(productInfoDetails);
 
             //var nodes = doc.DocumentNode.ToString();
             //foreach (var node in nodes)
@@ -93,11 +99,30 @@ namespace MobiParse.View
                 CategoryProductInfo = CategoryOfproductInfoNode[3].InnerText.ToString();
             }
 
-            HtmlNode[] ProductBrandInfoNode = doc.DocumentNode.Descendants("meta").Where(x => x.Attributes.Contains("property") && x.Attributes["property"].Value == "og:brand").Where(x => x.Attributes.Contains("content")).ToArray();
-            if (ProductBrandInfoNode != null)
+            HtmlNode[] ProductInfoNode = docInfo.DocumentNode.Descendants("div").Where(x => x.Attributes.Contains("class") && x.Attributes["class"].Value == "specs-group").ToArray();
+            if (ProductInfoNode != null)
             {
-                CategoryProductInfo = ProductBrandInfoNode[3].InnerText.ToString();
+                CategoryProductInfo = ProductInfoNode[0].InnerText.ToString();
             }
+
+            HtmlAgilityPack.HtmlDocument brandInfo = new HtmlAgilityPack.HtmlDocument();
+            brandInfo.LoadHtml(ProductInfoNode[0].InnerHtml);
+            HtmlNode[] BrandInfoProduct = brandInfo.DocumentNode.Descendants("a").ToArray();
+            HtmlAgilityPack.HtmlDocument colorInfo = new HtmlAgilityPack.HtmlDocument();
+            colorInfo.LoadHtml(ProductInfoNode[7].InnerHtml);
+            HtmlNode[] ColorInfoProduct = colorInfo.DocumentNode.Descendants("li").ToArray();
+            string productBrand = BrandInfoProduct[0].InnerText.ToString();
+            string productVersion= BrandInfoProduct[2].InnerText.ToString();
+            string colorVersion = ColorInfoProduct[0].InnerText.ToString();
+            colorVersion = colorVersion.Replace("\r\n", string.Empty).Replace(" ", string.Empty);
+
+
+
+            //HtmlNode[] ProductBrandInfoNode = doc.DocumentNode.Descendants("meta").Where(x => x.Attributes.Contains("property") && x.Attributes["property"].Value == "og:brand").Where(x => x.Attributes.Contains("content")).ToArray();
+            //if (ProductBrandInfoNode != null)
+            //{
+            //    CategoryProductInfo = ProductBrandInfoNode[0].InnerText.ToString();
+            //}
 
 
             HtmlNode productInfoNode = doc.DocumentNode.Descendants("h2").Where(x => x.Attributes.Contains("class") && x.Attributes["class"].Value == "section-title with-context header-curl").FirstOrDefault();
