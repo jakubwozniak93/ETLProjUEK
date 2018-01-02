@@ -10,7 +10,7 @@ namespace MobiParse.Models
     public class CategoryDataModels
     {
         [AutoIncrement, PrimaryKey]
-        public int ID { get; set; }
+        public int CategoryId { get; set; }
         public string CategoryName { get; set; }
     }
 }

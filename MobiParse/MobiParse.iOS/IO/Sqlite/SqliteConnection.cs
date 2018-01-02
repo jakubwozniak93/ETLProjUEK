@@ -9,13 +9,14 @@ using MobiParse.iOS.IO.Sqlite;
 using MobiParse.IO.Sqlite;
 using SQLite.Net.Async;
 using SQLite.Net;
+using SQLite.Net.Platform.XamarinIOS;
 
 [assembly: Xamarin.Forms.Dependency(typeof(SqliteConnection))]
 namespace MobiParse.iOS.IO.Sqlite
 {
     class SqliteConnection : MobiParse.IO.Sqlite.ISqliteConnection
     {
-        private const string SqliteFilename = "app.db3";
+        private const string SqliteFilename = "MobiParse.db3";
         object objLock = new object();
         private SQLiteConnectionWithLock conn = null;
 
@@ -29,9 +30,9 @@ namespace MobiParse.iOS.IO.Sqlite
                     {
                         if (conn == null)
                         {
-                            //string path = GetDBPath();
-                            //var platform = new SQLitePlatformIOS();
-                            //conn = new SQLiteConnectionWithLock(platform, new SQLiteConnectionString(path, true));
+                            string path = GetDBPath();
+                            var platform = new SQLitePlatformIOS();
+                            conn = new SQLiteConnectionWithLock(platform, new SQLiteConnectionString(path, true));
                         }
                     }
                 }
@@ -73,6 +74,11 @@ namespace MobiParse.iOS.IO.Sqlite
             var ConnectFuncion = new Func<SQLiteConnectionWithLock>(Connect);
             var conn = new SQLite.Net.Async.SQLiteAsyncConnection(ConnectFuncion);
             return conn;
+        }
+
+        string ISqliteConnection.GetDBPath(string dbPath)
+        {
+            return GetDBPath();
         }
     }
 }

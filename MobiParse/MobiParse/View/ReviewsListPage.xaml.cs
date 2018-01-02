@@ -1,4 +1,5 @@
 ﻿using HtmlAgilityPack;
+using MobiParse.IO.Sqlite;
 using MobiParse.Models;
 using MobiParse.ViewModel;
 using System;
@@ -39,7 +40,7 @@ namespace MobiParse.View
             item.HideOrShowDetails(review);
         }
 
-        public ExtractPage(string producktId)
+        public ExtractPage(string productId)
         {
             InitializeComponent();
             userList = new List<string>();
@@ -47,7 +48,7 @@ namespace MobiParse.View
             viewModel = new ViewModel.ReviewsListViewModel();
             viewModel.IsOverlayVisible = true;
             BindingContext = viewModel;
-            GetHTMLCodeAsync(producktId);
+            GetHTMLCodeAsync(productId);
         }
         
 
@@ -58,17 +59,17 @@ namespace MobiParse.View
             await Navigation.PushAsync(new MainPage());
         } 
 
-        public async Task GetHTMLCodeAsync(string producktId)
+        public async Task GetHTMLCodeAsync(string productId)
         {
-            viewModel.ProductCodeLbl = producktId;
-            urlReviews = ceneoUrl + producktId;
+            viewModel.ProductCodeLbl = productId;
+            urlReviews = ceneoUrl + productId;
             //var response = await new HttpClient().GetAsync(urlReview, urlReviews);
             //await GetProductInfo(producktId);
             //await GetProductInfo(urlReview);
-            await GetReviewInfo(urlReviews);
+            await GetReviewInfo(urlReviews, productId);
         }
         
-        public async Task GetReviewInfo(string url)
+        public async Task GetReviewInfo(string url, string productId)
         {
             urlDetails = url + "#tab=spec";
             url = url + ceneoUrlReviews;
@@ -96,7 +97,10 @@ namespace MobiParse.View
             HtmlNode[] CategoryOfproductInfoNode = doc.DocumentNode.Descendants("span").Where(x => x.Attributes.Contains("itemprop") && x.Attributes["itemprop"].Value == "title").ToArray();
             if (CategoryOfproductInfoNode != null)
             {
-                CategoryProductInfo = CategoryOfproductInfoNode[3].InnerText.ToString();
+                //CategoryProductInfo = CategoryOfproductInfoNode[3].InnerText.ToString();
+                var CategoryName = new CategoryDataModels();
+                CategoryName.CategoryName = CategoryOfproductInfoNode[3].InnerText.ToString();
+                await App.CategoryData.SaveCategory(CategoryName);
             }
 
             HtmlNode[] ProductInfoNode = docInfo.DocumentNode.Descendants("div").Where(x => x.Attributes.Contains("class") && x.Attributes["class"].Value == "specs-group").ToArray();
@@ -104,6 +108,10 @@ namespace MobiParse.View
             {
                 CategoryProductInfo = ProductInfoNode[0].InnerText.ToString();
             }
+
+            var categoryValueTest = await App.CategoryData.GetExamplesCategory();
+            var categoryValueTest2 = await App.CategoryData.GetCategory(1);
+
 
             HtmlAgilityPack.HtmlDocument brandInfo = new HtmlAgilityPack.HtmlDocument();
             brandInfo.LoadHtml(ProductInfoNode[0].InnerHtml);
@@ -138,7 +146,7 @@ namespace MobiParse.View
                 reviewInfo = await new HttpClient().GetStringAsync(new Uri(url + i));
                 doc.LoadHtml(reviewInfo);
                 HtmlNode[] reviewsInfoNodes = doc.DocumentNode.Descendants("li").Where(x => x.Attributes.Contains("class") && x.Attributes["class"].Value == "review-box js_product-review").ToArray();
-                ParseData(reviewsInfoNodes);
+                await ParseDataAsync(reviewsInfoNodes, productId);
             }
             viewModel.ReviewList = singleReviewData;
             string reviewsNumber = reviewCounts.ToString();
@@ -152,7 +160,7 @@ namespace MobiParse.View
         }
 
 
-        public void ParseData(HtmlNode[] nodesTable)
+        public async Task ParseDataAsync(HtmlNode[] nodesTable, string productId)
         {
             try
             {
@@ -246,10 +254,11 @@ namespace MobiParse.View
                         i++;
                         productCons = productCons + i.ToString() + ".) " + allCons.InnerText.ToString() + "\n";
                     }
-
+                    
 
                     singleReviewData.Add(new ReviewDetailsDataModel()
                     {
+                        ProductKey = productId,
                         UserName = name,
                         ReviewStatus = reviewStatus,
                         ScoreValue = scoreValue,
@@ -263,6 +272,9 @@ namespace MobiParse.View
                         IsVisible = false
                         
                     });
+                    await App.CategoryData.SaveReviewDetails(singleReviewData.Last());
+                    var categoryValueTest = await App.ReviewData.GetExamplesReviews();
+                    var categoryValueTest2 = await App.ReviewData.GetReviews(1);
                 }
             }catch(Exception ex)
             {

@@ -1,25 +1,16 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-using Android.App;
-using Android.Content;
-using Android.OS;
-using Android.Runtime;
-using Android.Views;
-using Android.Widget;
 using MobiParse.Droid.IO.Sqlite;
 using MobiParse.IO.Sqlite;
 using SQLite.Net.Async;
 using SQLite.Net;
+using SQLite.Net.Platform.XamarinAndroid;
 
 [assembly: Xamarin.Forms.Dependency(typeof(SqliteConnection))]
 namespace MobiParse.Droid.IO.Sqlite
 {
     class SqliteConnection : MobiParse.IO.Sqlite.ISqliteConnection
     {
-        private const string SqliteFilename = "app.db3";
+        private const string SqliteFilename = "MobiParse.db3";
 
         object objLock = new object();
         private SQLiteConnectionWithLock conn = null;
@@ -34,9 +25,9 @@ namespace MobiParse.Droid.IO.Sqlite
                     {
                         if (conn == null)
                         {
-                            //string path = GetDBPath();
-                            //var platform = new SQLitePlatformAndroid();
-                            //conn = new SQLiteConnectionWithLock(platform, new SQLiteConnectionString(path, true));
+                            string path = GetDBPath();
+                            var platform = new SQLitePlatformAndroidN();
+                            conn = new SQLiteConnectionWithLock(platform, new SQLiteConnectionString(path, true));
                         }
                     }
                 }
@@ -78,6 +69,11 @@ namespace MobiParse.Droid.IO.Sqlite
             var ConnectFuncion = new Func<SQLiteConnectionWithLock>(Connect);
             var conn = new SQLite.Net.Async.SQLiteAsyncConnection(ConnectFuncion);
             return conn;
+        }
+
+        string ISqliteConnection.GetDBPath(string dbPath)
+        {
+            return GetDBPath();
         }
     }
 }
