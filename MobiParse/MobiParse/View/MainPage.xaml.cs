@@ -36,10 +36,10 @@ namespace MobiParse
             else
             {
                 //iphone 8
-                producktId = "55381561";
+                //producktId = "55381561";
                 //iphone 7
                 //producktId = "47044601";
-                // xiaomi a1
+                // xiaomi note 4
                 producktId = "46943265";
             }
 

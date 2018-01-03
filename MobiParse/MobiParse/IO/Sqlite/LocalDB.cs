@@ -119,7 +119,7 @@ namespace MobiParse.IO.Sqlite
 
         internal async Task<bool> SaveReviewDetails(ReviewDetailsDataModel reviewDetail)
         {
-            List<ReviewDetailsDataModel> reviews = await db.Table<ReviewDetailsDataModel>().Where(x => x.ID == reviewDetail.ID).ToListAsync();
+            List<ReviewDetailsDataModel> reviews = await db.Table<ReviewDetailsDataModel>().Where(x => x.ReviewID == reviewDetail.ReviewID).ToListAsync();
 
             if (reviews.Count > 1)
             {

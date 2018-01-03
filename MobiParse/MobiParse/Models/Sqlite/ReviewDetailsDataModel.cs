@@ -11,6 +11,7 @@ namespace MobiParse.ViewModel
     {
         [AutoIncrement, PrimaryKey]
         public int ID { get; set; }
+        public string ReviewID { get; set; }
         public string ProductKey { get; set; }
         public string UserName { get; set; }
         public string ReviewStatus { get; set; }

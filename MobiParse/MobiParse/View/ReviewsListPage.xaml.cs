@@ -25,9 +25,11 @@ namespace MobiParse.View
         string urlReviews;
         string productInfo;
         string CategoryProductInfo;
+        string reviewId;
         List<string> userList;
         ObservableCollection<ReviewDetailsDataModel> singleReviewData;
         int reviewCounts = 0;
+        int dbCount = 0;
         string name, reviewStatus, scoreValue, dateTime, reviewText, reviewUseful, reviewUnuseful, urlDetails;
 
         private void ListOfReviews_ItemTapped(object sender, ItemTappedEventArgs e)
@@ -86,6 +88,9 @@ namespace MobiParse.View
             HtmlAgilityPack.HtmlDocument docInfo = new HtmlAgilityPack.HtmlDocument();
             docInfo.LoadHtml(productInfoDetails);
 
+
+
+            
             //var nodes = doc.DocumentNode.ToString();
             //foreach (var node in nodes)
             //{
@@ -109,9 +114,8 @@ namespace MobiParse.View
                 CategoryProductInfo = ProductInfoNode[0].InnerText.ToString();
             }
 
-            var categoryValueTest = await App.CategoryData.GetExamplesCategory();
-            var categoryValueTest2 = await App.CategoryData.GetCategory(1);
-
+            var DbCount = await App.ReviewData.GetExamplesReviews();
+            int dbCountBefore = DbCount.Count();
 
             HtmlAgilityPack.HtmlDocument brandInfo = new HtmlAgilityPack.HtmlDocument();
             brandInfo.LoadHtml(ProductInfoNode[0].InnerHtml);
@@ -149,8 +153,19 @@ namespace MobiParse.View
                 await ParseDataAsync(reviewsInfoNodes, productId);
             }
             viewModel.ReviewList = singleReviewData;
-            string reviewsNumber = reviewCounts.ToString();
-            viewModel.MessageLbl = "pobrano: " + reviewsNumber + " opinii.";
+            var DbCountAfter = await App.ReviewData.GetExamplesReviews();
+            int dbCountAfter = DbCountAfter.Count();
+            
+            if (dbCountAfter > dbCountBefore && dbCountBefore != 0)
+            {
+                dbCount = dbCountAfter - dbCountBefore;
+            }
+            else if(dbCountBefore == 0)
+            {
+                dbCount = dbCountAfter;
+            }
+            string reviewsNumber = dbCount.ToString();
+            viewModel.MessageLbl = "Do bazy zapisano: " + reviewsNumber + " opinii.";
             await Task.Delay(2000);
             viewModel.IsOverlayVisible = false;
             //HtmlNode[] allInfo = new HtmlNode[reviewInfoNodes.Length + reviewsInfoNodes.Length];
@@ -171,6 +186,13 @@ namespace MobiParse.View
                     HtmlAgilityPack.HtmlDocument review = new HtmlAgilityPack.HtmlDocument();
                     review.LoadHtml(allItem.InnerHtml);
 
+                    //get review id from code
+                    HtmlNode ReviewIdInfoNode = review.DocumentNode.Descendants("a").Where(x => x.Attributes.Contains("class") && x.Attributes["class"].Value == "product-review-comment-dummy js_product-review-comment-toggle").FirstOrDefault();
+                    if (ReviewIdInfoNode != null)
+                    {
+                        reviewId = ReviewIdInfoNode.Attributes["data-review-id"].Value;
+                    }
+                    
                     //get username from code
                     HtmlNode nameNode = review.DocumentNode.Descendants("div").Where(x => x.Attributes.Contains("class") && x.Attributes["class"].Value == "reviewer-name-line").FirstOrDefault();
                     if (nameNode != null)
@@ -196,8 +218,7 @@ namespace MobiParse.View
                     HtmlNode dateTimeNode = review.DocumentNode.Descendants("time").Where(x => x.Attributes.Contains("datetime")).FirstOrDefault();
                     if (dateTimeNode != null)
                     {
-                        dateTime = dateTimeNode.InnerText.ToString();
-                        dateTime = dateTime.Replace("\r\n", string.Empty);
+                        dateTime = dateTimeNode.Attributes["datetime"].Value;
                     }
                     //get review datetime
                     //HtmlNode dateTimeNode = review.DocumentNode.Descendants("span").Where(x => x.Attributes.Contains("class") && x.Attributes["class"].Value == "review-time").FirstOrDefault();
@@ -254,10 +275,11 @@ namespace MobiParse.View
                         i++;
                         productCons = productCons + i.ToString() + ".) " + allCons.InnerText.ToString() + "\n";
                     }
-                    
+
 
                     singleReviewData.Add(new ReviewDetailsDataModel()
                     {
+                        ReviewID = reviewId,
                         ProductKey = productId,
                         UserName = name,
                         ReviewStatus = reviewStatus,
@@ -280,7 +302,6 @@ namespace MobiParse.View
             {
 
             }
-             
         }
         
     }
