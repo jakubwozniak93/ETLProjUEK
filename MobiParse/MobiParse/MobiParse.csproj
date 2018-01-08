@@ -57,6 +57,18 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Models\Sqlite\CategoryDataModel.cs" />
     <Compile Include="Models\Sqlite\ProductDataModel.cs" />
+    <Compile Include="ViewModel\DBCategoryViewModel.cs" />
+    <Compile Include="View\DBProductReaderPage.xaml.cs">
+      <DependentUpon>DBProductReaderPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ViewModel\DBProductViewModel.cs" />
+    <Compile Include="View\DBCategoryPage.xaml.cs">
+      <DependentUpon>DBCategoryPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\DBReviewPage.xaml.cs">
+      <DependentUpon>DBReviewPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ViewModel\DBReviewViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="View\MainPage.xaml">
@@ -66,6 +78,18 @@
     <EmbeddedResource Include="App.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Include="View\DBProductReaderPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Include="View\DBCategoryPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="View\DBReviewPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

@@ -29,24 +29,41 @@ namespace MobiParse.IO.Sqlite
 
         }
 
+        /// <summary>
+        /// Method to whipe whole DataBase.
+        /// </summary>
         internal void ClearAll()
         {
             DependencyService.Get<ISqliteConnection>().DropDatabase();
             Init();
         }
 
+        /// <summary>
+        /// Gets all data from Category Table.
+        /// </summary>
+        /// <returns>Returns list of category data.</returns>
         internal async Task<IList<CategoryDataModels>> GetExamplesCategory()
         {
             List<CategoryDataModels> list = await db.Table<CategoryDataModels>().ToListAsync();
             return list;
         }
 
-        internal async Task<CategoryDataModels> GetCategory(int id)
+        /// <summary>
+        /// Gets a specific category data.
+        /// </summary>
+        /// <returns>specific category data.</returns>
+        /// <param name="id">Identifier.</param>
+        internal async Task<CategoryDataModels> GetCategory(string categoryName)
         {
-            CategoryDataModels c = await db.Table<CategoryDataModels>().Where(x => x.CategoryId == id).FirstOrDefaultAsync();
+            CategoryDataModels c = await db.Table<CategoryDataModels>().Where(x => x.CategoryName == categoryName).FirstOrDefaultAsync();
             return c;
         }
 
+        /// <summary>
+        /// Saves the category.
+        /// </summary>
+        /// <returns>The category.</returns>
+        /// <param name="category">Category.</param>
         internal async Task<bool> SaveCategory(CategoryDataModels category)
         {
             List<CategoryDataModels> categories = await db.Table<CategoryDataModels>().Where(x => x.CategoryName == category.CategoryName).ToListAsync();
@@ -70,16 +87,23 @@ namespace MobiParse.IO.Sqlite
             }
         }
 
+
         internal async Task<IList<ProductDataModels>> GetExamplesProduct()
         {
             List<ProductDataModels> list = await db.Table<ProductDataModels>().ToListAsync();
             return list;
         }
 
-        internal async Task<ProductDataModels> GetProduct(int id)
+        internal async Task<ProductDataModels> GetProductById(int id)
         {
             ProductDataModels c = await db.Table<ProductDataModels>().Where(x => x.ID == id).FirstOrDefaultAsync();
             return c;
+        }
+
+        internal async Task<IList<ProductDataModels>> GetProductByCategoryName(string categoryName)
+        {
+            List<ProductDataModels> pn = await db.Table<ProductDataModels>().Where(x => x.CategoryName == categoryName).ToListAsync();
+            return pn;
         }
 
         internal async Task<bool> SaveProductId(ProductDataModels product)
@@ -99,41 +123,51 @@ namespace MobiParse.IO.Sqlite
             else
             {
                 ProductDataModels pr = products[0];
+                pr.CategoryID = product.CategoryID;
                 pr.ProductKey = product.ProductKey;
+                pr.ProductName = product.ProductName;
                 int res = await db.UpdateAsync(pr);
                 return res != -1;
             }
         }
 
-        internal async Task<IList<ReviewDetailsDataModel>> GetExamplesReviews()
+        internal async Task<IList<ReviewDetailsDataModel>> GetExampleReviewsDetails()
         {
             List<ReviewDetailsDataModel> list = await db.Table<ReviewDetailsDataModel>().ToListAsync();
             return list;
         }
 
-        internal async Task<ReviewDetailsDataModel> GetReviews(int id)
+        internal async Task<ReviewDetailsDataModel> GetReviewDetail(int id)
         {
             ReviewDetailsDataModel c = await db.Table<ReviewDetailsDataModel>().Where(x => x.ID == id).FirstOrDefaultAsync();
             return c;
         }
 
+        internal async Task<IList<ReviewDetailsDataModel>> GetReviewDetailByProductKey(string productKey)
+        {
+            List<ReviewDetailsDataModel> pk = await db.Table<ReviewDetailsDataModel>().Where(x => x.ProductKey == productKey).ToListAsync();
+            return pk;
+        }
+
         internal async Task<bool> SaveReviewDetails(ReviewDetailsDataModel reviewDetail)
         {
-            List<ReviewDetailsDataModel> reviews = await db.Table<ReviewDetailsDataModel>().Where(x => x.ReviewID == reviewDetail.ReviewID).ToListAsync();
+            List<ReviewDetailsDataModel> reviewsDetails = await db.Table<ReviewDetailsDataModel>().Where(x => x.ReviewID == reviewDetail.ReviewID).ToListAsync();
 
-            if (reviews.Count > 1)
+            if (reviewsDetails.Count > 1)
             {
                 throw new Exception("Duplicated");
             }
 
-            if (reviews.Count == 0)
+            if (reviewsDetails.Count == 0)
             {
                 int res = await db.InsertAsync(reviewDetail);
                 return res != -1;
             }
             else
             {
-                ReviewDetailsDataModel rd = reviews[0];
+                ReviewDetailsDataModel rd = reviewsDetails[0];
+                rd.CategoryName = reviewDetail.CategoryName;
+                rd.ProductName = reviewDetail.ProductName;
                 rd.ProductKey = reviewDetail.ProductKey;
                 rd.UserName = reviewDetail.UserName;
                 rd.ReviewStatus = reviewDetail.ReviewStatus;
@@ -149,6 +183,14 @@ namespace MobiParse.IO.Sqlite
                 int res = await db.UpdateAsync(rd);
                 return res != -1;
             }
+        }
+
+        internal async Task<bool> DeleteReviewAsync(string reviewID)
+        {
+            ReviewDetailsDataModel delRev = await db.Table<ReviewDetailsDataModel>().Where(x => x.ReviewID == reviewID).FirstOrDefaultAsync();
+
+            int res = await db.DeleteAsync(delRev);
+            return res != -1;
         }
 
         internal async Task<bool> UpdateCategoryAsync(CategoryDataModels example)

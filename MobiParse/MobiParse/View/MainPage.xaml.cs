@@ -46,6 +46,15 @@ namespace MobiParse
 
             await Navigation.PushAsync(new ExtractPage(producktId));
         }
+
+
+        private async void OpenDb(object sender, EventArgs e)
+        {
+            IList<CategoryDataModels> categoryData = await App.CategoryData.GetExamplesCategory();
+
+            await Navigation.PushAsync(new DBCategoryPage(categoryData));
+        }
+
         
         private async void ExtractClicked(object sender, EventArgs e)
         {

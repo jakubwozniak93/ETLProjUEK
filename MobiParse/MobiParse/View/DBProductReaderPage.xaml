@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="MobiParse.View.DBProductReaderPage" Title="Produkty">
+	<ContentPage.Content>
+    <AbsoluteLayout>
+            <ContentView Padding="0" Margin="0" AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0, 0, 1, 1">
+                <Grid AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0, 0, 1, 1" >
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="2*" />
+                        <RowDefinition Height="auto" />
+                        <RowDefinition Height="auto" />
+                        <RowDefinition Height="auto" />
+                        <RowDefinition Height="95*" />
+                    </Grid.RowDefinitions>
+                    <Label Grid.Row="1" Text="Lista Produktów" VerticalOptions="StartAndExpand" HorizontalOptions="CenterAndExpand" FontAttributes="Bold" TextColor="Black" FontSize="22" />
+                    <BoxView Grid.Row="3" HeightRequest="1" Color="Gray" Margin="0,10,0,10" />
+                    <ListView x:Name="ListOfCategories" Grid.Row="4" HasUnevenRows="True" VerticalOptions="StartAndExpand" HorizontalOptions="CenterAndExpand" SeparatorVisibility="Default" SeparatorColor="Gray" BackgroundColor="Transparent" ItemsSource="{Binding ProductList}" ItemTapped="ListOfProduct_ItemTapped" >
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <ViewCell>
+                                    <Grid VerticalOptions="Fill" BackgroundColor="White" Padding="10" Margin="0,0,0,8">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="Auto" />
+                                        </Grid.RowDefinitions>
+                                            <Label Grid.Row="0" Text="{Binding ProductName}" FontAttributes="Bold" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" FontSize="15" IsVisible="true"/>
+                                            <Label Grid.Row="1" Text="{Binding ProductKey}" FontAttributes="None" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" FontSize="10" IsVisible="true"/>
+
+                                    </Grid>
+                                </ViewCell>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </Grid>
+            </ContentView>
+
+        </AbsoluteLayout>
+    </ContentPage.Content>
+     <ContentPage.ToolbarItems>
+            <ToolbarItem Name="iconexample" Icon="ic_home_white_48dp.png" Priority="0" Order="Primary"  Activated="OnClick" />  
+        </ContentPage.ToolbarItems> 
+</ContentPage>
+

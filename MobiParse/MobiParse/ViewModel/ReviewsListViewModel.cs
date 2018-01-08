@@ -82,17 +82,23 @@ namespace MobiParse.ViewModel
 
         private void UpdateReviews(ReviewDetailsDataModel review)
         {
-            var index = ReviewList.IndexOf(review);
-            ReviewList.Remove(review);
-            ReviewList.Insert(index, review);
-            if (review.IsVisible)
+            try
             {
-                ShowDetailsIcon = _expandIcon;
+                var index = ReviewList.IndexOf(review);
+                ReviewList.Remove(review);
+                ReviewList.Insert(index, review);
+                if (review.IsVisible)
+                {
+                    ShowDetailsIcon = _expandIcon;
+                }
+                else
+                {
+                    ShowDetailsIcon = _collapseIcon;
+                }
+            }catch(Exception e){
+                
             }
-            else
-            {
-                ShowDetailsIcon = _collapseIcon;
-            }
+
             //ReviewList = ReviewList;
         }
 
@@ -147,6 +153,7 @@ namespace MobiParse.ViewModel
                 RaisePropertyChanged(nameof(ProductPros));
             }
         }
+
         public string ProductCons
         {
             get

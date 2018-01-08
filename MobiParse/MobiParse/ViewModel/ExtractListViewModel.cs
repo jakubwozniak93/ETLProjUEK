@@ -74,6 +74,8 @@ namespace MobiParse.ViewModel
             _oldReview = review;
         }
 
+
+
         private void UpdateReviews(ReviewDetailsDataModel review)
         {
             var index = ReviewList.IndexOf(review);

@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:MobiParse"
@@ -52,7 +52,7 @@
                             </Image.GestureRecognizers>
                         </Image>
                     </Grid>
-                    <Button Grid.Row="6" HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand" BackgroundColor="#F39729" Text="Baza Danych" TextColor="White" Margin="25, 10, 25, 10" Clicked="Button_Clicked"/>
+                    <Button Grid.Row="6" HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand" BackgroundColor="#F39729" Text="Baza Danych" TextColor="White" Margin="25, 10, 25, 10" Clicked="OpenDb"/>
 
                 </Grid>
             </ContentView>
